@@ -29,8 +29,8 @@ const (
 )
 
 type (
-	LogType  int64
-	LogLevel int64
+	LogType  int32
+	LogLevel int32
 )
 
 const (
@@ -103,12 +103,12 @@ func (l *LogLevel) ParseFromString(s string) bool {
 }
 
 func (l *LogLevel) Set(v LogLevel) {
-	atomic.StoreInt64((*int64)(l), int64(v))
+	atomic.StoreInt32((*int32)(l), int32(v))
 }
 
 func (l *LogLevel) Test(m LogType) bool {
-	v := atomic.LoadInt64((*int64)(l))
-	return (v & int64(m)) != 0
+	v := atomic.LoadInt32((*int32)(l))
+	return (v & int32(m)) != 0
 }
 
 type nopCloser struct {
@@ -624,3 +624,4 @@ func Println(v ...interface{}) {
 	s := fmt.Sprintln(v...)
 	StdLog.output(1, nil, 0, s)
 }
+
