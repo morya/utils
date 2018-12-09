@@ -104,6 +104,7 @@ func (l *LogLevel) ParseFromString(s string) bool {
 
 func (l *LogLevel) Set(v LogLevel) {
 	atomic.StoreInt32((*int32)(l), int32(v))
+	atomic.StoreInt32((*int32)(&currLevel), int32(v))
 }
 
 func (l *LogLevel) Test(m LogType) bool {
@@ -132,6 +133,7 @@ type Logger struct {
 }
 
 var StdLog = New(NopCloser(os.Stderr), "")
+var currLevel = LevelInfo
 
 func New(writer io.Writer, prefix string) *Logger {
 	out, ok := writer.(io.WriteCloser)
@@ -141,7 +143,7 @@ func New(writer io.Writer, prefix string) *Logger {
 	return &Logger{
 		out:   out,
 		log:   log.New(out, prefix, LstdFlags|Lshortfile),
-		level: LevelAll,
+		level: currLevel,
 		trace: LevelError,
 	}
 }
