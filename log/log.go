@@ -426,6 +426,10 @@ func SetPrefix(prefix string) {
 	StdLog.SetPrefix(prefix)
 }
 
+func Level() LogLevel {
+	return StdLog.level
+}
+
 func SetLevel(v LogLevel) {
 	StdLog.SetLevel(v)
 }
