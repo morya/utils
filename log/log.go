@@ -451,6 +451,10 @@ func Panic(v ...interface{}) {
 	os.Exit(1)
 }
 
+func Fatal(v ...interface{}) {
+	Panic(v...)
+}
+
 func Panicf(format string, v ...interface{}) {
 	t := TYPE_PANIC
 	s := fmt.Sprintf(format, v...)
